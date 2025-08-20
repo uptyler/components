@@ -19,7 +19,8 @@
     [attr.aria-checked]="checked"
     [attr.aria-disabled]="disabled && disabledInteractive ? 'true' : null"
     (click)="_handleClick()"
-    #switch>
+    #switch
+  >
     <div class="mat-mdc-slide-toggle-touch-target"></div>
     <span class="mdc-switch__track"></span>
     <span class="mdc-switch__handle-track">
@@ -28,25 +29,28 @@
           <span class="mdc-elevation-overlay"></span>
         </span>
         <span class="mdc-switch__ripple">
-          <span class="mat-mdc-slide-toggle-ripple mat-focus-indicator" mat-ripple
+          <span
+            class="mat-mdc-slide-toggle-ripple mat-focus-indicator"
+            mat-ripple
             [matRippleTrigger]="switch"
             [matRippleDisabled]="disableRipple || disabled"
-            [matRippleCentered]="true"></span>
+            [matRippleCentered]="true"
+          ></span>
         </span>
         @if (!hideIcon) {
           <span class="mdc-switch__icons">
-            <svg
-              class="mdc-switch__icon mdc-switch__icon--on"
-              viewBox="0 0 24 24"
-              aria-hidden="true">
-              <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
-            </svg>
-            <svg
-              class="mdc-switch__icon mdc-switch__icon--off"
-              viewBox="0 0 24 24"
-              aria-hidden="true">
-              <path d="M20 13H4v-2h16v2z" />
-            </svg>
+            <ng-content select="[matToggleOffIcon]" />
+            @if (!useCustomIcons) {
+              <svg matToggleOffIcon class="mdc-switch__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4,13h16v-2H4v2z" />
+              </svg>
+            }
+            <ng-content select="[matToggleOnIcon]" />
+            @if (!useCustomIcons) {
+              <svg matToggleOnIcon class="mdc-switch__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+              </svg>
+            }
           </span>
         }
       </span>

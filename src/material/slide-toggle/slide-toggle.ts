@@ -25,6 +25,9 @@ import {
   ViewEncapsulation,
   inject,
   HostAttributeToken,
+  viewChild,
+  contentChild,
+  Directive,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -188,6 +191,9 @@ export class MatSlideToggle
 
   /** Whether the slide toggle should remain interactive when it is disabled. */
   @Input({transform: booleanAttribute}) disabledInteractive: boolean;
+
+  @Input({transform: booleanAttribute})
+  useCustomIcons: boolean = false;
 
   /** An event will be dispatched each time the slide-toggle changes its value. */
   @Output() readonly change = new EventEmitter<MatSlideToggleChange>();
