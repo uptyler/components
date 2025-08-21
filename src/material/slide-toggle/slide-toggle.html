@@ -37,22 +37,46 @@
             [matRippleCentered]="true"
           ></span>
         </span>
-        @if (!hideIcon) {
-          <span class="mdc-switch__icons">
-            <ng-content select="[matToggleOffIcon]" />
-            @if (!useCustomIcons) {
-              <svg matToggleOffIcon class="mdc-switch__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4,13h16v-2H4v2z" />
-              </svg>
-            }
-            <ng-content select="[matToggleOnIcon]" />
-            @if (!useCustomIcons) {
-              <svg matToggleOnIcon class="mdc-switch__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
-              </svg>
-            }
-          </span>
-        }
+        <span class="mdc-switch__icons">
+          <!-- If custom disabled icon is specified, and toggle is disabled -->
+          @if (toggleIconDisabledOff() && disabled) {
+            <ng-content select="[matToggleDisabledOffIcon]" />
+
+            <!-- If custom icon is specified, and toggle is not disabled -->
+          } @else {
+            <ng-content select="[matToggleOffIcon]">
+              @if (hideIcon !== 'both' && hideIcon !== 'off') {
+                <svg
+                  matToggleOffIcon
+                  class="mdc-switch__icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M4,13h16v-2H4v2z" />
+                </svg>
+              }
+            </ng-content>
+          }
+          <!-- If no custom icon is specified, or custom disabled icon is specified and toggle is not disabled -->
+
+          <!-- repeat above logic for enabled toggles -->
+          @if (toggleIconDisabledOn() && disabled) {
+            <ng-content select="[matToggleDisabledOnIcon]" />
+          } @else {
+            <ng-content select="[matToggleOnIcon]">
+              @if (hideIcon !== 'both' && hideIcon !== 'on') {
+                <svg
+                  matToggleOnIcon
+                  class="mdc-switch__icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                </svg>
+              }
+            </ng-content>
+          }
+        </span>
       </span>
     </span>
   </button>
@@ -60,7 +84,7 @@
   <!--
     Clicking on the label will trigger another click event from the button.
     Stop propagation here so other listeners further up in the DOM don't execute twice.
-  -->
+    -->
   <label class="mdc-label" [for]="buttonId" [attr.id]="_labelId" (click)="$event.stopPropagation()">
     <ng-content></ng-content>
   </label>

@@ -8,6 +8,13 @@ $_interactive-disabled-selector: '.mat-mdc-slide-toggle-disabled-interactive.mdc
 
 $fallbacks: m3-slide-toggle.get-tokens();
 
+[matToggleOnIcon],
+[matToggleOffIcon],
+[matToggleDisabledOnIcon],
+[matToggleDisabledOffIcon] {
+  display: none;
+}
+
 .mdc-switch {
   align-items: center;
   background: none;
@@ -446,16 +453,19 @@ $fallbacks: m3-slide-toggle.get-tokens();
 
 .mdc-switch__icon,
 .mdc-switch__icons > [matToggleOffIcon],
-.mdc-switch__icons > [matToggleOnIcon] {
-  bottom: 0;
-  left: 0;
-  margin: auto;
+.mdc-switch__icons > [matToggleOnIcon],
+.mdc-switch__icons > [matToggleDisabledOffIcon],
+.mdc-switch__icons > [matToggleDisabledOnIcon] {
+  margin: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
   opacity: 0;
+  font-size: 16px;
+  display: block;
+
   transition: opacity 30ms 0ms cubic-bezier(0.4, 0, 1, 1);
-  font-size: 15px;
 
   .mdc-switch--unselected & {
     width: token-utils.slot(slide-toggle-unselected-icon-size, $fallbacks);
@@ -483,7 +493,9 @@ $fallbacks: m3-slide-toggle.get-tokens();
 }
 
 .mdc-switch--selected .mdc-switch__icons [matToggleOnIcon],
-.mdc-switch--unselected .mdc-switch__icons [matToggleOffIcon] {
+.mdc-switch--unselected .mdc-switch__icons [matToggleOffIcon],
+.mdc-switch--disabled.mdc-switch--selected .mdc-switch__icons [matToggleDisabledOnIcon],
+.mdc-switch--disabled.mdc-switch--unselected .mdc-switch__icons [matToggleDisabledOffIcon] {
   opacity: 1;
   transition: opacity 45ms 30ms cubic-bezier(0, 0, 0.2, 1);
 }

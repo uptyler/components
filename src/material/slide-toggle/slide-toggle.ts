@@ -28,6 +28,8 @@ import {
   viewChild,
   contentChild,
   Directive,
+  computed,
+  ContentChild,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -37,7 +39,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import {_IdGenerator, FocusMonitor} from '@angular/cdk/a11y';
+import {_IdGenerator, FocusMonitor, CdkAriaLive} from '@angular/cdk/a11y';
 import {
   MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS,
   MatSlideToggleDefaultOptions,
@@ -49,6 +51,14 @@ import {
   MatRipple,
 } from '../core';
 import {_CdkPrivateStyleLoader} from '@angular/cdk/private';
+import {CommonModule} from '@angular/common';
+import {V} from '@angular/cdk/keycodes';
+import {
+  MatToggleDisabledOffIcon,
+  MatToggleDisabledOnIcon,
+  MatToggleOffIcon,
+  MatToggleOnIcon,
+} from './directives/toggle-icons';
 
 /** Change event object emitted by a slide toggle. */
 export class MatSlideToggleChange {
@@ -92,7 +102,7 @@ export class MatSlideToggleChange {
       multi: true,
     },
   ],
-  imports: [MatRipple, _MatInternalFormField],
+  imports: [MatRipple, _MatInternalFormField, CommonModule],
 })
 export class MatSlideToggle
   implements OnDestroy, AfterContentInit, OnChanges, ControlValueAccessor, Validator
@@ -187,13 +197,16 @@ export class MatSlideToggle
   }
 
   /** Whether to hide the icon inside of the slide toggle. */
-  @Input({transform: booleanAttribute}) hideIcon: boolean;
+  @Input({transform: _defaultBoth}) hideIcon: 'both' | 'on' | 'off' | 'none' = 'none';
 
   /** Whether the slide toggle should remain interactive when it is disabled. */
   @Input({transform: booleanAttribute}) disabledInteractive: boolean;
 
-  @Input({transform: booleanAttribute})
-  useCustomIcons: boolean = false;
+  /** Element ng-container with directive of matToggleOnIcon */
+  toggleIconOn = contentChild(MatToggleOnIcon);
+  toggleIconOff = contentChild(MatToggleOffIcon);
+  toggleIconDisabledOn = contentChild(MatToggleDisabledOnIcon);
+  toggleIconDisabledOff = contentChild(MatToggleDisabledOffIcon);
 
   /** An event will be dispatched each time the slide-toggle changes its value. */
   @Output() readonly change = new EventEmitter<MatSlideToggleChange>();
@@ -220,7 +233,8 @@ export class MatSlideToggle
     this.tabIndex = tabIndex == null ? 0 : parseInt(tabIndex) || 0;
     this.color = defaults.color || 'accent';
     this.id = this._uniqueId = inject(_IdGenerator).getId('mat-mdc-slide-toggle-');
-    this.hideIcon = defaults.hideIcon ?? false;
+
+    this.hideIcon = defaults.hideIcon ?? 'none';
     this.disabledInteractive = defaults.disabledInteractive ?? false;
     this._labelId = this._uniqueId + '-label';
   }
@@ -322,4 +336,15 @@ export class MatSlideToggle
     // `aria-labelledby`, because the button gets flagged as not having a label by tools like axe.
     return this.ariaLabel ? null : this._labelId;
   }
+}
+function _defaultBoth(
+  value: 'both' | 'on' | 'off' | '' | undefined,
+): 'both' | 'on' | 'off' | 'none' {
+  if (value === '') {
+    return 'both';
+  }
+  if (value === undefined) {
+    return 'none';
+  }
+  return value as 'on' | 'off' | 'none';
 }

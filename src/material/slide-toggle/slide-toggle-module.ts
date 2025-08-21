@@ -7,11 +7,28 @@
  */
 
 import {NgModule} from '@angular/core';
-import {MatCommonModule} from '../core';
 import {MatSlideToggle} from './slide-toggle';
+import {
+  MatToggleDisabledOffIcon,
+  MatToggleDisabledOnIcon,
+  MatToggleOffIcon,
+  MatToggleOnIcon,
+} from './directives/toggle-icons';
 
 @NgModule({
-  imports: [MatSlideToggle, MatCommonModule],
-  exports: [MatSlideToggle, MatCommonModule],
+  imports: [
+    MatSlideToggle,
+    MatToggleOnIcon,
+    MatToggleOffIcon,
+    MatToggleDisabledOnIcon,
+    MatToggleDisabledOffIcon,
+  ],
+  exports: [
+    MatSlideToggle,
+    MatToggleOnIcon,
+    MatToggleOffIcon,
+    MatToggleDisabledOnIcon,
+    MatToggleDisabledOffIcon,
+  ],
 })
 export class MatSlideToggleModule {}

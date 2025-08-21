@@ -7,13 +7,38 @@
   <mat-slide-toggle disabled disabledInteractive [(ngModel)]="firstToggle"
     >Disabled Interactive Toggle</mat-slide-toggle
   >
+  <mat-slide-toggle hideIcon="off" [(ngModel)]="firstToggle">No icon (While Off)</mat-slide-toggle>
+  <mat-slide-toggle hideIcon="on" [(ngModel)]="firstToggle">No icon (While On)</mat-slide-toggle>
   <mat-slide-toggle hideIcon [(ngModel)]="firstToggle">No icon</mat-slide-toggle>
-  <mat-slide-toggle useCustomIcons>
-    <mat-icon matToggleOnIcon>lock</mat-icon>
-    <mat-icon matToggleOffIcon>lock_open</mat-icon>
+  <mat-slide-toggle [(ngModel)]="firstToggle">
+    <mat-icon matToggleOnIcon>light_mode</mat-icon>
+    <mat-icon matToggleOffIcon>dark_mode</mat-icon>
     Custom Icons
   </mat-slide-toggle>
-
+  <mat-slide-toggle disabled [(ngModel)]="firstToggle">
+    <mat-icon matToggleOnIcon>light_mode</mat-icon>
+    <mat-icon matToggleOffIcon>dark_mode</mat-icon>
+    Disabled Custom Icons
+  </mat-slide-toggle>
+  <mat-slide-toggle disabled [(ngModel)]="firstToggle">
+    <mat-icon matToggleOnIcon>light_mode</mat-icon>
+    <mat-icon matToggleOffIcon>dark_mode</mat-icon>
+    <mat-icon matToggleDisabledOnIcon>lock</mat-icon>
+    <mat-icon matToggleDisabledOffIcon>lock_open</mat-icon>
+    Disabled Custom Disabled Icons
+  </mat-slide-toggle>
+  <mat-slide-toggle [disabled]="firstToggle">
+    <mat-icon matToggleOnIcon>light_mode</mat-icon>
+    <mat-icon matToggleOffIcon>dark_mode</mat-icon>
+    <mat-icon matToggleDisabledOnIcon>lock</mat-icon>
+    <mat-icon matToggleDisabledOffIcon>lock_open</mat-icon>
+    Disable Bound All Custom Icons
+  </mat-slide-toggle>
+  <mat-slide-toggle [disabled]="firstToggle">
+    <mat-icon matToggleOnIcon>light_mode</mat-icon>
+    <mat-icon matToggleDisabledOffIcon>lock_open</mat-icon>
+    Disable Bound All Custom Icons with some icons not specified
+  </mat-slide-toggle>
   <p>With label before the slide toggle.</p>
 
   <mat-slide-toggle labelPosition="before" color="primary" [(ngModel)]="firstToggle"
@@ -23,7 +48,7 @@
     >Disabled Slide Toggle</mat-slide-toggle
   >
   <mat-slide-toggle labelPosition="before" [disabled]="firstToggle">Disable Bound</mat-slide-toggle>
-  <mat-slide-toggle labelPosition="before" hideIcon [(ngModel)]="firstToggle"
+  <mat-slide-toggle labelPosition="before" hideIcons [(ngModel)]="firstToggle"
     >No icon</mat-slide-toggle
   >
 

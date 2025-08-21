@@ -81,6 +81,7 @@ ng_project(
         "//:node_modules/@angular/forms",
         "//:node_modules/rxjs",
         "//src/material/core",
+        "//src/material/slide-toggle/directives",
     ],
 )
 
